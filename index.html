@@ -19,32 +19,62 @@
 
     <div id='map'></div>
     <script>
-        $.getJSON("./mpios_focosec_geo.geojson", function(json) {
+        mapboxgl.accessToken = '';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v9',
+            center: [-96, 37.8],
+            zoom: 3
+        });
 
-            mapboxgl.accessToken = 'token';
-            var map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/mapbox/light-v9',
-                center: [-96, 37.8],
-                zoom: 3
+        map.on('load', function () {
+
+            map.addSource('municipios', {
+                "type": "geojson",
+                "data": "./mpios_focosec_geo.geojson"
             });
 
-            map.on('load', function () {
-
-                map.addLayer({
-                    'id': 'maine',
-                    'type': 'fill',
-                    'source': {
-                        'type': 'geojson',
-                        'data': json
+            map.addLayer({
+                'id': 'maine',
+                'type': 'circle',
+                'source': 'municipios',
+                'layout': {},
+                "paint": {
+                    //Size circle raidus by earthquake magnitude and zoom level
+                    "circle-radius": {
+                        "property": "mag",
+                        "type": "exponential",
+                        "stops": [
+                            [{ zoom: 7, value: 1 }, 1],
+                            [{ zoom: 7, value: 6 }, 4],
+                            [{ zoom: 16, value: 1 }, 5],
+                            [{ zoom: 16, value: 6 }, 50],
+                        ]
                     },
-                    'layout': {},
-                    'paint': {
-                        'fill-color': '#088',
-                        'fill-opacity': 0.8
+                    //Color circle by earthquake magnitude
+                    "circle-color": {
+                        "property": "mag",
+                        "type": "exponential",
+                        "stops": [
+                            [1, "rgba(33,102,172,0)"],
+                            [2, "rgb(103,169,207)"],
+                            [3, "rgb(209,229,240)"],
+                            [4, "rgb(253,219,199)"],
+                            [5, "rgb(239,138,98)"],
+                            [6, "rgb(178,24,43)"]
+                        ]
+                    },
+                    "circle-stroke-color": "white",
+                    "circle-stroke-width": 1,
+                    //Transition from heatmap to circle layer by zoom level
+                    "circle-opacity": {
+                        "stops": [
+                            [7, 0],
+                            [8, 1]
+                        ]
                     }
-                });
-            });
+                }
+            }, 'waterway-label');
         });
     </script>
 
