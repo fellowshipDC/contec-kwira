@@ -178,12 +178,12 @@ export class AppComponent implements OnInit {
 
   config = {
     'size': {
-      'width': 650,
-      'height': 600,
+      'width': 800,
+      'height': 800,
       'margin': { top: 0, right: 0, bottom: 0, left: 0 },
       'translateX': 70,
       'translateY': 300,
-      'scale': 0.9
+      'scale': 1
     },
     'xAxis': {
       'enabled' : false
@@ -206,16 +206,16 @@ export class AppComponent implements OnInit {
         'translate': [2580, 700],
         'scale': 1300,
         'parser': (d) => {
-          d.id = +d.properties.state_code.mun_code;
+          d.id = +d.properties.mun_code;
           return d.id;
         },
         'id': (d) => {
-          return 'states-' + d.id;
+          return 'municipalities-' + d.id;
         }
       }
     },
     tip: (d) => {
-      return d.properties.state_name.mun_code;
+      return d.properties.mun_code;
     }
   };
 
