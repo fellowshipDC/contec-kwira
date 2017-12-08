@@ -202,11 +202,11 @@ export class AppComponent implements OnInit {
       },
       'topojson': {
         'url': './assets/topojson/states.json',
-        'objects': 'states',
+        'objects': 'municipalities',
         'translate': [2580, 700],
         'scale': 1300,
         'parser': (d) => {
-          d.id = +d.properties.state_code;
+          d.id = +d.properties.state_code.mun_code;
           return d.id;
         },
         'id': (d) => {
@@ -214,22 +214,23 @@ export class AppComponent implements OnInit {
         }
       }
     },
-    tip: (d) => d.properties.state_name
+    tip: (d) => {
+      return d.properties.state_name.mun_code;
+    }
   };
 
   constructor() {}
 
   ngOnInit() {
 
-    dbox
-      .chart(this.config)
-        .bindTo('#map')
-        .data({'raw': this.data})
+    dbox.chart(this.config)
+      .bindTo('#map')
+      .data({'raw': this.data})
       .layer(dbox.map)
-        .id('inegi')
-        .z('2002')
+      .id('inegi')
+      .z('value')
       .end()
-        .draw();
+      .draw();
 
   }
 
