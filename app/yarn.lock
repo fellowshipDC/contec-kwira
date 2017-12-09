@@ -5593,7 +5593,7 @@ topojson-server@2.0.0:
   dependencies:
     commander "2"
 
-topojson-server@3.0.0:
+topojson-server@3.0.0, topojson-server@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/topojson-server/-/topojson-server-3.0.0.tgz#378e78e87c3972a7b5be2c5d604369b6bae69c5e"
   dependencies:

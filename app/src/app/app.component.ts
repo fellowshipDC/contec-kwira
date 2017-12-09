@@ -206,16 +206,19 @@ export class AppComponent implements OnInit {
         'translate': [2580, 700],
         'scale': 1300,
         'parser': (d) => {
-          d.id = +d.properties.mun_code;
+          d.id = +d.properties.cve_mun;
           return d.id;
         },
         'id': (d) => {
           return 'municipalities-' + d.id;
+        },
+        'filter': {
+          'state_code': 8
         }
       }
     },
     tip: (d) => {
-      return d.properties.mun_code;
+      return d.properties.cve_mun;
     }
   };
 
@@ -227,8 +230,8 @@ export class AppComponent implements OnInit {
       .bindTo('#map')
       .data({'raw': this.data})
       .layer(dbox.map)
-      .id('inegi')
-      .z('value')
+        .id('inegi')
+        .color('value')
       .end()
       .draw();
 

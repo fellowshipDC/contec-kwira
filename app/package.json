@@ -32,6 +32,7 @@
     "rxjs": "^5.4.1",
     "textures": "^1.2.0",
     "topojson": "^3.0.2",
+    "topojson-server": "^3.0.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
